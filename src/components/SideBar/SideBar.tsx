@@ -3,18 +3,6 @@
 import * as React from 'react'
 
 import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
-import { Separator } from '@/components/ui/separator'
-import {
-    SidebarProvider,
-    SidebarInset,
-    SidebarTrigger,
     Sidebar,
     SidebarHeader,
     SidebarContent,
@@ -74,10 +62,12 @@ import {
     HeartPulse,
     PlayCircle,
     Code,
+    BrainCog,
 } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useIsMobile } from '@/hooks/use-mobile'
+import Link from 'next/link'
 
 const DATA = {
     user: {
@@ -196,10 +186,10 @@ const DATA = {
             url: '#',
             icon: ShoppingCart,
             items: [
-                { title: 'Online Store', url: '#' },
-                { title: 'Marketplace', url: '#' },
-                { title: 'Booking System', url: '#' },
-                { title: 'Subscription Service', url: '#' },
+                { title: 'Online Store', url: '/projects/online-store' },
+                { title: 'Marketplace', url: '/projects/market-place' },
+                { title: 'Booking System', url: '/projects/booking-system' },
+                { title: 'Subscription Service', url: '/projects/subscription-service' },
             ],
         },
         {
@@ -207,10 +197,10 @@ const DATA = {
             url: '#',
             icon: Users,
             items: [
-                { title: 'Forum', url: '#' },
-                { title: 'Q&A Platform', url: '#' },
-                { title: 'Chat Application', url: '#' },
-                { title: 'Social Network', url: '#' },
+                { title: 'Forum', url: '/projects/forum' },
+
+                { title: 'Chat Application', url: '/projects/chat-application' },
+                { title: 'Social Network', url: '/projects/social-network' },
             ],
         },
         {
@@ -218,10 +208,10 @@ const DATA = {
             url: '#',
             icon: GraduationCap,
             items: [
-                { title: 'E-learning Platform', url: '#' },
-                { title: 'Online Courses', url: '#' },
-                { title: 'Quiz System', url: '#' },
-                { title: 'Student Management', url: '#' },
+                { title: 'E-learning Platform', url: '/projects/elearning-platform' },
+                { title: 'Online Courses', url: '/projects/online-courses' },
+                { title: 'Quiz System', url: '/projects/quiz-system' },
+                { title: 'Student Management', url: '/projects/student-management' },
             ],
         },
         {
@@ -229,10 +219,10 @@ const DATA = {
             url: '#',
             icon: CreditCard,
             items: [
-                { title: 'Expense Tracker', url: '#' },
-                { title: 'Payment System', url: '#' },
-                { title: 'Crypto Dashboard', url: '#' },
-                { title: 'Invoice & Billing', url: '#' },
+                { title: 'Expense Tracker', url: '/projects/expense-tracker' },
+                { title: 'Payment System', url: '/projects/payment-system' },
+                { title: 'Crypto Dashboard', url: '/projects/crypto-dashboard' },
+                { title: 'Invoice & Billing', url: '/projects/invoice-and-billing' },
             ],
         },
         {
@@ -240,10 +230,10 @@ const DATA = {
             url: '#',
             icon: HeartPulse,
             items: [
-                { title: 'Appointment Booking', url: '#' },
-                { title: 'Fitness Tracker', url: '#' },
-                { title: 'Health Records', url: '#' },
-                { title: 'Mental Health App', url: '#' },
+                { title: 'Appointment Booking', url: '/projects/appointment-booking' },
+                { title: 'Fitness Tracker', url: '/projects/fitness-tracker' },
+                { title: 'Health Records', url: '/projects/health-records' },
+                { title: 'Mental Health App', url: '/projects/mental-health-app' },
             ],
         },
 
@@ -252,21 +242,21 @@ const DATA = {
             url: '#',
             icon: PlayCircle,
             items: [
-                { title: 'Streaming Platform', url: '#' },
-                { title: 'Music Player', url: '#' },
-                { title: 'Mini Games', url: '#' },
-                { title: 'Podcast Platform', url: '#' },
+                { title: 'Streaming Platform', url: '/projects/streaming-platform' },
+                { title: 'Music Player', url: '/projects/music-music' },
+                { title: 'Mini Games', url: '/projects/mini-games' },
+                { title: 'Podcast Platform', url: '/projects/podcast' },
             ],
         },
         {
             title: 'AI & Data',
             url: '#',
-            icon: Bot,
+            icon: BrainCog,
             items: [
-                { title: 'AI Chatbot', url: '#' },
-                { title: 'Recommendation System', url: '#' },
-                { title: 'Data Visualization', url: '#' },
-                { title: 'AI SaaS Tool', url: '#' },
+                { title: 'AI Chatbot', url: '/projects/ai-chatbot' },
+                { title: 'Recommendation System', url: '/projects/recommendation-system' },
+                { title: 'Data Visualization', url: '/projects/data-visualization' },
+                { title: 'AI SaaS Tool', url: '/projects/ai-saas-tool' },
             ],
         },
         {
@@ -274,10 +264,10 @@ const DATA = {
             url: '#',
             icon: Code,
             items: [
-                { title: 'Component Library', url: '#' },
-                { title: 'API Platform', url: '#' },
-                { title: 'Code Snippet Manager', url: '#' },
-                { title: 'Dev Dashboard', url: '#' },
+                { title: 'Component Library', url: '/projects/component-library' },
+                { title: 'API Platform', url: '/projects/api-platform' },
+                { title: 'Code Snippet Manager', url: '/projects/code-snippet-manager' },
+                { title: 'Dev Dashboard', url: '/projects/dev-dashboard' },
             ],
         },
     ],
@@ -308,198 +298,214 @@ export const SideBar = () => {
     if (!activeTeam) return null
 
     return (
-        <SidebarProvider>
-            <Sidebar collapsible="icon">
-                <SidebarHeader>
-                    {/* Team Switcher */}
-                    <SidebarMenu>
-                        <SidebarMenuItem>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <SidebarMenuButton
-                                        size="lg"
-                                        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                                    >
-                                        <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                            <activeTeam.logo className="size-4" />
-                                        </div>
-                                        <div className="grid flex-1 text-left text-sm leading-tight">
-                                            <span className="truncate font-semibold">{activeTeam.name}</span>
-                                            <span className="truncate text-xs">{activeTeam.plan}</span>
-                                        </div>
-                                        <ChevronsUpDown className="ml-auto" />
-                                    </SidebarMenuButton>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                    className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                                    align="start"
-                                    side={isMobile ? 'bottom' : 'right'}
-                                    sideOffset={4}
+        <Sidebar collapsible="icon">
+            <SidebarHeader>
+                {/* Team Switcher */}
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <SidebarMenuButton
+                                    size="lg"
+                                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                                 >
-                                    <DropdownMenuLabel className="text-xs text-muted-foreground">
-                                        Teams
-                                    </DropdownMenuLabel>
-                                    {DATA.teams.map((team, index) => (
-                                        <DropdownMenuItem
-                                            key={team.name}
-                                            onClick={() => setActiveTeam(team)}
-                                            className="gap-2 p-2"
-                                        >
-                                            <div className="flex size-6 items-center justify-center rounded-sm border">
-                                                <team.logo className="size-4 shrink-0" />
-                                            </div>
-                                            {team.name}
-                                            <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-                                        </DropdownMenuItem>
-                                    ))}
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem className="gap-2 p-2">
-                                        <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                                            <Plus className="size-4" />
+                                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                                        <activeTeam.logo className="size-4" />
+                                    </div>
+                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                        <span className="truncate font-semibold">{activeTeam.name}</span>
+                                        <span className="truncate text-xs">{activeTeam.plan}</span>
+                                    </div>
+                                    <ChevronsUpDown className="ml-auto" />
+                                </SidebarMenuButton>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                                align="start"
+                                side={isMobile ? 'bottom' : 'right'}
+                                sideOffset={4}
+                            >
+                                <DropdownMenuLabel className="text-xs text-muted-foreground">Teams</DropdownMenuLabel>
+                                {DATA.teams.map((team, index) => (
+                                    <DropdownMenuItem
+                                        key={team.name}
+                                        onClick={() => setActiveTeam(team)}
+                                        className="gap-2 p-2"
+                                    >
+                                        <div className="flex size-6 items-center justify-center rounded-sm border">
+                                            <team.logo className="size-4 shrink-0" />
                                         </div>
-                                        <div className="font-medium text-muted-foreground">Add team</div>
+                                        {team.name}
+                                        <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                                     </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                                ))}
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="gap-2 p-2">
+                                    <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                                        <Plus className="size-4" />
+                                    </div>
+                                    <div className="font-medium text-muted-foreground">Add team</div>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+                {/* Team Switcher */}
+            </SidebarHeader>
+
+            <SidebarContent>
+                {/* Nav Main */}
+                <SidebarGroup>
+                    <SidebarGroupLabel>Platform</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {DATA.navMain.map(item => (
+                            <Collapsible
+                                key={item.title}
+                                asChild
+                                defaultOpen={item.isActive}
+                                className="group/collapsible"
+                            >
+                                <SidebarMenuItem>
+                                    <CollapsibleTrigger asChild>
+                                        <SidebarMenuButton tooltip={item.title} className="group">
+                                            {item.icon && <item.icon />}
+                                            <span>{item.title}</span>
+                                            <ChevronRight className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-90" />
+                                        </SidebarMenuButton>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                        <SidebarMenuSub>
+                                            {item.items?.map(subItem => (
+                                                <SidebarMenuSubItem key={subItem.title}>
+                                                    <SidebarMenuSubButton asChild>
+                                                        <a href={subItem.url}>
+                                                            <span>{subItem.title}</span>
+                                                        </a>
+                                                    </SidebarMenuSubButton>
+                                                </SidebarMenuSubItem>
+                                            ))}
+                                        </SidebarMenuSub>
+                                    </CollapsibleContent>
+                                </SidebarMenuItem>
+                            </Collapsible>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+                {/* Nav Main */}
+
+                {/*Projects Categories*/}
+                <SidebarGroup>
+                    <SidebarGroupLabel>Projects Categories</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {DATA.projectCategories.map(item => (
+                            <Collapsible key={item.title} asChild className="group/collapsible">
+                                <SidebarMenuItem>
+                                    <CollapsibleTrigger asChild>
+                                        <SidebarMenuButton tooltip={item.title} className="group">
+                                            {item.icon && <item.icon />}
+                                            <span>{item.title}</span>
+                                            <ChevronRight className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-90" />
+                                        </SidebarMenuButton>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                        <SidebarMenuSub>
+                                            {item.items?.map(subItem => (
+                                                <SidebarMenuSubItem key={subItem.title}>
+                                                    <SidebarMenuSubButton asChild>
+                                                        <Link href={subItem.url}>
+                                                            <span>{subItem.title}</span>
+                                                        </Link>
+                                                    </SidebarMenuSubButton>
+                                                </SidebarMenuSubItem>
+                                            ))}
+                                        </SidebarMenuSub>
+                                    </CollapsibleContent>
+                                </SidebarMenuItem>
+                            </Collapsible>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+
+                {/* Nav Project */}
+                <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+                    <SidebarGroupLabel>Account</SidebarGroupLabel>
+                    <SidebarMenu>
+                        {DATA.account.map(item => (
+                            <SidebarMenuItem key={item.name}>
+                                <SidebarMenuButton asChild>
+                                    <a href={item.url}>
+                                        <item.icon />
+                                        <span>{item.name}</span>
+                                    </a>
+                                </SidebarMenuButton>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <SidebarMenuAction showOnHover>
+                                            <MoreHorizontal />
+                                            <span className="sr-only">More</span>
+                                        </SidebarMenuAction>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                        className="w-48 rounded-lg"
+                                        side={isMobile ? 'bottom' : 'right'}
+                                        align={isMobile ? 'end' : 'start'}
+                                    >
+                                        <DropdownMenuItem>
+                                            <Folder className="text-muted-foreground" />
+                                            <span>View Project</span>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Forward className="text-muted-foreground" />
+                                            <span>Share Project</span>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            <Trash2 className="text-muted-foreground" />
+                                            <span>Delete Project</span>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </SidebarMenuItem>
+                        ))}
+                        <SidebarMenuItem>
+                            <SidebarMenuButton className="text-sidebar-foreground/70">
+                                <MoreHorizontal className="text-sidebar-foreground/70" />
+                                <span>More</span>
+                            </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>
-                    {/* Team Switcher */}
-                </SidebarHeader>
-
-                <SidebarContent>
-                    {/* Nav Main */}
-                    <SidebarGroup>
-                        <SidebarGroupLabel>Platform</SidebarGroupLabel>
-                        <SidebarMenu>
-                            {DATA.navMain.map(item => (
-                                <Collapsible
-                                    key={item.title}
-                                    asChild
-                                    defaultOpen={item.isActive}
-                                    className="group/collapsible"
+                </SidebarGroup>
+                {/* Nav Project */}
+            </SidebarContent>
+            <SidebarFooter>
+                {/* Nav User */}
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <SidebarMenuButton
+                                    size="lg"
+                                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                                 >
-                                    <SidebarMenuItem>
-                                        <CollapsibleTrigger asChild>
-                                            <SidebarMenuButton tooltip={item.title} className="group">
-                                                {item.icon && <item.icon />}
-                                                <span>{item.title}</span>
-                                                <ChevronRight className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-90" />
-                                            </SidebarMenuButton>
-                                        </CollapsibleTrigger>
-                                        <CollapsibleContent>
-                                            <SidebarMenuSub>
-                                                {item.items?.map(subItem => (
-                                                    <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild>
-                                                            <a href={subItem.url}>
-                                                                <span>{subItem.title}</span>
-                                                            </a>
-                                                        </SidebarMenuSubButton>
-                                                    </SidebarMenuSubItem>
-                                                ))}
-                                            </SidebarMenuSub>
-                                        </CollapsibleContent>
-                                    </SidebarMenuItem>
-                                </Collapsible>
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroup>
-                    {/* Nav Main */}
-
-                    {/*Projects Categories*/}
-                    <SidebarGroup>
-                        <SidebarGroupLabel>Projects Categories</SidebarGroupLabel>
-                        <SidebarMenu>
-                            {DATA.projectCategories.map(item => (
-                                <Collapsible key={item.title} asChild className="group/collapsible">
-                                    <SidebarMenuItem>
-                                        <CollapsibleTrigger asChild>
-                                            <SidebarMenuButton tooltip={item.title} className="group">
-                                                {item.icon && <item.icon />}
-                                                <span>{item.title}</span>
-                                                <ChevronRight className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-90" />
-                                            </SidebarMenuButton>
-                                        </CollapsibleTrigger>
-                                        <CollapsibleContent>
-                                            <SidebarMenuSub>
-                                                {item.items?.map(subItem => (
-                                                    <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild>
-                                                            <a href={subItem.url}>
-                                                                <span>{subItem.title}</span>
-                                                            </a>
-                                                        </SidebarMenuSubButton>
-                                                    </SidebarMenuSubItem>
-                                                ))}
-                                            </SidebarMenuSub>
-                                        </CollapsibleContent>
-                                    </SidebarMenuItem>
-                                </Collapsible>
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroup>
-
-                    {/* Nav Project */}
-                    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-                        <SidebarGroupLabel>Account</SidebarGroupLabel>
-                        <SidebarMenu>
-                            {DATA.account.map(item => (
-                                <SidebarMenuItem key={item.name}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
-                                            <span>{item.name}</span>
-                                        </a>
-                                    </SidebarMenuButton>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <SidebarMenuAction showOnHover>
-                                                <MoreHorizontal />
-                                                <span className="sr-only">More</span>
-                                            </SidebarMenuAction>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent
-                                            className="w-48 rounded-lg"
-                                            side={isMobile ? 'bottom' : 'right'}
-                                            align={isMobile ? 'end' : 'start'}
-                                        >
-                                            <DropdownMenuItem>
-                                                <Folder className="text-muted-foreground" />
-                                                <span>View Project</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem>
-                                                <Forward className="text-muted-foreground" />
-                                                <span>Share Project</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem>
-                                                <Trash2 className="text-muted-foreground" />
-                                                <span>Delete Project</span>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </SidebarMenuItem>
-                            ))}
-                            <SidebarMenuItem>
-                                <SidebarMenuButton className="text-sidebar-foreground/70">
-                                    <MoreHorizontal className="text-sidebar-foreground/70" />
-                                    <span>More</span>
+                                    <Avatar className="h-8 w-8 rounded-lg">
+                                        <AvatarImage src={DATA.user.avatar} alt={DATA.user.name} />
+                                        <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                    </Avatar>
+                                    <div className="grid flex-1 text-left text-sm leading-tight">
+                                        <span className="truncate font-semibold">{DATA.user.name}</span>
+                                        <span className="truncate text-xs">{DATA.user.email}</span>
+                                    </div>
+                                    <ChevronsUpDown className="ml-auto size-4" />
                                 </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarGroup>
-                    {/* Nav Project */}
-                </SidebarContent>
-                <SidebarFooter>
-                    {/* Nav User */}
-                    <SidebarMenu>
-                        <SidebarMenuItem>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <SidebarMenuButton
-                                        size="lg"
-                                        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                                    >
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                                side={isMobile ? 'bottom' : 'right'}
+                                align="end"
+                                sideOffset={4}
+                            >
+                                <DropdownMenuLabel className="p-0 font-normal">
+                                    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                         <Avatar className="h-8 w-8 rounded-lg">
                                             <AvatarImage src={DATA.user.avatar} alt={DATA.user.name} />
                                             <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -508,96 +514,42 @@ export const SideBar = () => {
                                             <span className="truncate font-semibold">{DATA.user.name}</span>
                                             <span className="truncate text-xs">{DATA.user.email}</span>
                                         </div>
-                                        <ChevronsUpDown className="ml-auto size-4" />
-                                    </SidebarMenuButton>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                    className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                                    side={isMobile ? 'bottom' : 'right'}
-                                    align="end"
-                                    sideOffset={4}
-                                >
-                                    <DropdownMenuLabel className="p-0 font-normal">
-                                        <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                                            <Avatar className="h-8 w-8 rounded-lg">
-                                                <AvatarImage src={DATA.user.avatar} alt={DATA.user.name} />
-                                                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                                            </Avatar>
-                                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                                <span className="truncate font-semibold">{DATA.user.name}</span>
-                                                <span className="truncate text-xs">{DATA.user.email}</span>
-                                            </div>
-                                        </div>
-                                    </DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem>
-                                            <Sparkles />
-                                            Upgrade to Pro
-                                        </DropdownMenuItem>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem>
-                                            <BadgeCheck />
-                                            Account
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <CreditCard />
-                                            Billing
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <Bell />
-                                            Notifications
-                                        </DropdownMenuItem>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
+                                    </div>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
                                     <DropdownMenuItem>
-                                        <LogOut />
-                                        Log out
+                                        <Sparkles />
+                                        Upgrade to Pro
                                     </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </SidebarMenuItem>
-                    </SidebarMenu>
-                    {/* Nav User */}
-                </SidebarFooter>
-                <SidebarRail />
-            </Sidebar>
-
-            <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                    <div className="flex items-center gap-2 px-4">
-                        <SidebarTrigger className="-ml-1" />
-                        <Separator orientation="vertical" className="mr-2 h-4" />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="#">Community&apos;s projects</BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="hidden md:block" />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
-                    </div>
-                </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                    <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                        <div className="aspect-video rounded-xl bg-muted/50" />
-                        <div className="aspect-video rounded-xl bg-muted/50" />
-                        <div className="aspect-video rounded-xl bg-muted/50" />
-                    </div>
-                    <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 " />
-                    <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                        <div className="aspect-video rounded-xl bg-muted/50" />
-                        <div className="aspect-video rounded-xl bg-muted/50" />
-                        <div className="aspect-video rounded-xl bg-muted/50" />
-                    </div>
-                    <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50" />
-                </div>
-            </SidebarInset>
-        </SidebarProvider>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <BadgeCheck />
+                                        Account
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <CreditCard />
+                                        Billing
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Bell />
+                                        Notifications
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <LogOut />
+                                    Log out
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+                {/* Nav User */}
+            </SidebarFooter>
+            <SidebarRail />
+        </Sidebar>
     )
 }

@@ -1,9 +1,5 @@
-import { SideBar } from '@/components/SideBar/SideBar'
+import { redirect } from 'next/navigation'
 
 export default function ProjectsPage() {
-    return (
-        <div className="mt-[82px]">
-            <SideBar />
-        </div>
-    )
+    redirect('/projects/online-store')
 }

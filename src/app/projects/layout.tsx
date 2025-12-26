@@ -1,14 +1,17 @@
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/app-sidebar'
+import { SidebarInset, SidebarProvider } from '@/components/animate-ui/components/radix/sidebar'
 import Header from '@/components/Header/Header'
 import { SideBar } from '@/components/SideBar/SideBar'
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Header />
-
-            <main>{children}</main>
+            <SidebarProvider>
+                <SideBar />
+                <SidebarInset>
+                    <main>{children}</main>
+                </SidebarInset>
+            </SidebarProvider>
         </>
     )
 }

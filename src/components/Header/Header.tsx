@@ -23,9 +23,12 @@ export default function Header() {
                     <Github className="size-5 cursor-pointer" strokeWidth={1.5} />
                 </a>
 
-                <div className="border-[2px] h-[25px] w-[25px] border-[#000]  rounded-full flex items-center justify-center">
+                <Link
+                    href="/register"
+                    className="border-[2px] h-[25px] w-[25px] border-[#000]  rounded-full flex items-center justify-center"
+                >
                     <User animateOnHover className="size-5 cursor-pointer" strokeWidth={1.5} />
-                </div>
+                </Link>
 
                 <div className="border-[2px] border-[#000] rounded h-[25px] w-[25px] flex items-center justify-center">
                     <ThemeTogglerButton />

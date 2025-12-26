@@ -4,6 +4,7 @@ import { Button } from '@/components/animate-ui/components/buttons/button'
 import { motion } from 'framer-motion'
 import { EyeClosed, Eye } from 'lucide-react'
 import LogoFramework from '@/HomeComponents/LogoFramework/LogoFramework'
+import Link from 'next/link'
 
 export default function Description() {
     return (
@@ -70,14 +71,19 @@ export default function Description() {
             >
                 <Button className="cursor-pointer">Get started</Button>
 
-                <Button variant="ghost" className="group w-[150px] flex items-center justify-between cursor-pointer">
-                    <span>View projects</span>
+                <Link href="/projects/online-store">
+                    <Button
+                        variant="ghost"
+                        className="group w-[150px] flex items-center justify-between cursor-pointer"
+                    >
+                        <span>View projects</span>
 
-                    <span className="relative w-5 h-5">
-                        <EyeClosed className="size-5 transition-all duration-300 opacity-100 scale-100 group-hover:opacity-0 group-hover:scale-75 absolute inset-0" />
-                        <Eye className="size-5 transition-all duration-300 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 absolute inset-0" />
-                    </span>
-                </Button>
+                        <span className="relative w-5 h-5">
+                            <EyeClosed className="size-5 transition-all duration-300 opacity-100 scale-100 group-hover:opacity-0 group-hover:scale-75 absolute inset-0" />
+                            <Eye className="size-5 transition-all duration-300 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 absolute inset-0" />
+                        </span>
+                    </Button>
+                </Link>
             </motion.div>
 
             {/*Logo framework*/}
