@@ -12,6 +12,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { registerAction } from '@/app/(Auth)/register/action'
 import { AlertCircleIcon, CheckCircle2Icon, X } from 'lucide-react'
 import Link from 'next/link'
+import { Separator } from '@/components/ui/separator'
+import Toast from '@/components/Toast/Toast'
 
 // Zod validation schema
 const registerSchema = z
@@ -89,6 +91,14 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
         }
 
         setSuccess(true)
+        setFormData({
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            gender: '',
+            country: '',
+        })
     }
 
     // Cancel
@@ -121,10 +131,15 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
             <FieldGroup className="w-full max-w-md shadow-sm p-5 rounded-2xl dark:border-[#737373] border-2">
                 {/* ACCOUNT INFO */}
                 <FieldSet>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 h-[20px]">
                         <FieldLegend variant={'label'}>Register</FieldLegend>
 
-                        <Link href="/login">
+                        <Separator orientation="vertical" className="h-full" />
+
+                        <Link
+                            href="/login"
+                            className="text-[#f2f2f3] hover:text-black hover:scale-105 duration-300 dark:text-[#737373] dark:hover:text-white"
+                        >
                             {' '}
                             <FieldLegend variant={'label'}>Login</FieldLegend>
                         </Link>
@@ -261,77 +276,8 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
                 </Field>
             </FieldGroup>
 
-            <AnimatePresence mode="wait">
-                {error && (
-                    <motion.div
-                        key="error-alert"
-                        initial={{ opacity: 0, y: -100, scale: 0.8 }}
-                        animate={{ opacity: 1, y: 0, scale: 1, rotate: [0, -5, 5, -5, 5, 0] }}
-                        exit={{ opacity: 0, x: 100, scale: 0.8 }}
-                        transition={{
-                            type: 'spring',
-                            stiffness: 300,
-                            damping: 25,
-                            rotate: {
-                                duration: 0.5,
-                                ease: 'easeInOut',
-                            },
-                        }}
-                        className="fixed top-10 right-5 z-50 shadow-lg max-w-md" // ← fixed + max-w
-                    >
-                        <Alert variant="destructive" className="bg-white dark:bg-black relative pr-10">
-                            <AlertCircleIcon className="h-4 w-4" />
-                            <AlertTitle>Register Failed!</AlertTitle>
-                            <AlertDescription>{error}</AlertDescription>
-
-                            <motion.button
-                                whileHover={{ scale: 1.1, rotate: 90 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => setError('')}
-                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                                aria-label="Close"
-                            >
-                                <X className="h-4 w-4" />
-                            </motion.button>
-                        </Alert>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-            <AnimatePresence mode="wait">
-                {success && (
-                    <motion.div
-                        key="error-alert"
-                        initial={{ opacity: 0, y: -100, scale: 0.8 }}
-                        animate={{ opacity: 1, y: 0, scale: 1, rotate: [0, -5, 5, -5, 5, 0] }}
-                        exit={{ opacity: 0, x: 100, scale: 0.8 }}
-                        transition={{
-                            type: 'spring',
-                            stiffness: 300,
-                            damping: 25,
-                            rotate: {
-                                duration: 0.5,
-                                ease: 'easeInOut',
-                            },
-                        }}
-                        className="fixed top-10 right-5 z-50 shadow-lg max-w-md"
-                    >
-                        <Alert variant="destructive" className="bg-white dark:bg-black relative pr-10">
-                            <CheckCircle2Icon className="h-4 w-4" />
-                            <AlertTitle>Register success!</AlertTitle>
-
-                            <motion.button
-                                whileHover={{ scale: 1.1, rotate: 90 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => setSuccess(false)}
-                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                                aria-label="Close"
-                            >
-                                <X className="h-4 w-4" />
-                            </motion.button>
-                        </Alert>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <Toast title={'Register Failed!'} value={error} status={false} onCloseToast={() => setError('')} />
+            <Toast title={'Register success!'} status={success} onCloseToast={() => setSuccess(false)} />
         </div>
     )
 }

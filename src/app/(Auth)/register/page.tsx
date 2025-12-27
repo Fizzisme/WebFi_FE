@@ -22,9 +22,5 @@ const getCountries = async (): Promise<string[]> => {
 
 export default async function RegisterPage() {
     const countries = await getCountries()
-    return (
-        <div className={'w-full h-full mt-30'}>
-            <RegisterForm countries={countries} />
-        </div>
-    )
+    return <RegisterForm countries={countries} />
 }

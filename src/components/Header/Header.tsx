@@ -24,7 +24,7 @@ export default function Header() {
                 </a>
 
                 <Link
-                    href="/register"
+                    href="/login"
                     className="border-[2px] h-[25px] w-[25px] border-[#000]  rounded-full flex items-center justify-center"
                 >
                     <User animateOnHover className="size-5 cursor-pointer" strokeWidth={1.5} />

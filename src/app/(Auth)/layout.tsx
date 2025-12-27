@@ -3,7 +3,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     return (
         <div className="">
             <Header />
-            <main>{children}</main>
+            <main className="w-full h-full mt-30">{children}</main>
         </div>
     )
 }
