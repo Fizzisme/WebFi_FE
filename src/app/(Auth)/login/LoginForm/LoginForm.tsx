@@ -5,10 +5,7 @@ import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 
 import { Button } from '@/components/animate-ui/components/buttons/button'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertCircleIcon, CheckCircle2Icon, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { Separator } from '@/components/ui/separator'
 import { LoginAction } from '@/app/(Auth)/login/action'
@@ -81,6 +78,28 @@ export default function LoginForm() {
         })
         setErrors({})
     }
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError('')
+            }, 3000)
+
+            // Cleanup: clear timeout
+            return () => clearTimeout(timer)
+        }
+    }, [error])
+
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setSuccess(false)
+            }, 3000)
+
+            // Cleanup: clear timeout
+            return () => clearTimeout(timer)
+        }
+    }, [success])
     return (
         <div className="relative w-full flex justify-center items-center">
             <FieldGroup className="w-full max-w-md shadow-sm p-5 rounded-2xl dark:border-[#737373] border-2">

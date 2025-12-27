@@ -1,16 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { z } from 'zod'
 import { Button } from '@/components/animate-ui/components/buttons/button'
 import { Checkbox } from '@/components/animate-ui/components/headless/checkbox'
 import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { registerAction } from '@/app/(Auth)/register/action'
-import { AlertCircleIcon, CheckCircle2Icon, X } from 'lucide-react'
 import Link from 'next/link'
 import { Separator } from '@/components/ui/separator'
 import Toast from '@/components/Toast/Toast'
@@ -125,6 +122,17 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
             return () => clearTimeout(timer)
         }
     }, [error])
+
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setSuccess(false)
+            }, 3000)
+
+            // Cleanup: clear timeout
+            return () => clearTimeout(timer)
+        }
+    }, [success])
 
     return (
         <div className="relative w-full flex justify-center items-center">

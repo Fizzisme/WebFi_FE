@@ -1,5 +1,18 @@
 import Header from '@/components/Header/Header'
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+import { cookies } from 'next/headers'
+
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('access_token')?.value
+
+    const res = await fetch(`http://localhost:8080/v1/member/me`, {
+        method: 'GET',
+        headers: {
+            Cookie: `access_token=${accessToken}`,
+        },
+        cache: 'no-store',
+    })
+
     return (
         <div className="">
             <Header />
