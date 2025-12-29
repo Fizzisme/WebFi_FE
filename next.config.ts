@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
             },
         },
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'scontent.fsgn5-14.fna.fbcdn.net',
+            },
+        ],
+    },
 };
 
 export default nextConfig;

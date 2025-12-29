@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Titillium_Web, Lexend_Deca } from "next/font/google";
 import "./globals.css";
 import Navigate from "@/components/Navigate/Navigate";
+import { Providers } from '@/components/Providers/Providers'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,8 +35,11 @@ export default function RootLayout({
       <body
         className={`${lexendDeca.className} antialiased`}
       >
-      <Navigate/>
-        {children}
+      <Providers>
+          <Navigate/>
+          {children}
+      </Providers>
+
       </body>
     </html>
   );
