@@ -14,3 +14,14 @@ export function formatSlugToTitle(slug: string) {
         })
         .join(' ')
 }
+export function getInitials(name: string, length = 2): string {
+    if (!name) return ''
+
+    return name
+        .trim()
+        .split(/\s+/)          // tách theo khoảng trắng
+        .slice(0, length)     // lấy 2 từ đầu
+        .map(word => word[0]) // lấy chữ cái đầu
+        .join('')
+        .toUpperCase()
+}
