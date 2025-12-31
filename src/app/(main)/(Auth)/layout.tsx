@@ -13,10 +13,5 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         cache: 'no-store',
     })
 
-    return (
-        <div className="">
-            <Header />
-            <main className="w-full h-full mt-30">{children}</main>
-        </div>
-    )
+    return <main className="w-full h-full mt-30">{children}</main>
 }

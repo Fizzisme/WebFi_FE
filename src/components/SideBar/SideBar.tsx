@@ -70,7 +70,8 @@ import { useIsMobile } from '@/hooks/use-mobile'
 import Link from 'next/link'
 import { getInitials } from '@/lib/utils'
 
-import { IMember } from '@/app/projects/layout'
+import { IMember } from '@/service/member'
+import { logoutMember } from '@/app/(main)/(Auth)/action'
 interface SideBarProps {
     member: IMember | null
 }
@@ -304,6 +305,11 @@ export const SideBar = ({ member }: SideBarProps) => {
     const avatarSrc = member?.profile.avatar ?? ''
     const username = member?.username ?? 'Guest'
     const email = member?.email ?? 'Guest'
+
+    const handleClickLogout = async () => {
+        return await logoutMember()
+    }
+
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader>
@@ -552,7 +558,7 @@ export const SideBar = ({ member }: SideBarProps) => {
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleClickLogout}>
                                     <LogOut />
                                     Log out
                                 </DropdownMenuItem>

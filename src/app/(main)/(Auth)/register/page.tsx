@@ -1,4 +1,4 @@
-import RegisterForm from '@/app/(Auth)/register/RegisterForm/RegisterForm'
+import RegisterForm from '@/app/(main)/(Auth)/register/RegisterForm/RegisterForm'
 
 interface Country {
     country: string

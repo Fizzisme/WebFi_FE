@@ -8,7 +8,7 @@ import { Button } from '@/components/animate-ui/components/buttons/button'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { Separator } from '@/components/ui/separator'
-import { LoginAction } from '@/app/(Auth)/login/action'
+import { LoginAction } from '@/app/(main)/(Auth)/action'
 import Toast from '@/components/Toast/Toast'
 import { signIn } from 'next-auth/react'
 // Zod validation schema

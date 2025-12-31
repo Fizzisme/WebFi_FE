@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Github } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/useHook/useAuth'
-import { IMember } from '@/app/projects/layout'
+import { IMember } from '@/service/member'
 import { getInitials } from '@/lib/utils'
 
 interface HeaderProps {
