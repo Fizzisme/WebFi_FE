@@ -19,6 +19,10 @@ const registerSchema = z
             .string()
             .min(3)
             .max(255),
+        displayName: z
+            .string()
+            .min(3)
+            .max(255),
         email: z.string().email(),
         password: z
             .string()
@@ -40,6 +44,7 @@ type FormErrors = Partial<Record<keyof RegisterFormData, string>>
 export default function RegisterForm({ countries }: { countries: string[] }) {
     const [formData, setFormData] = useState<RegisterFormData>({
         username: '',
+        displayName: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -90,6 +95,7 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
         setSuccess(true)
         setFormData({
             username: '',
+            displayName: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -102,6 +108,7 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
     const handleCancel = () => {
         setFormData({
             username: '',
+            displayName: '',
             email: '',
             password: '',
             confirmPassword: '',
@@ -164,19 +171,29 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
                             />
                             {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
                         </Field>
-
                         <Field>
-                            <FieldLabel>Email</FieldLabel>
+                            <FieldLabel>Display Name</FieldLabel>
                             <Input
-                                name="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={e => handleInputChange('email', e.target.value)}
-                                placeholder="Fizz@example.com"
+                                name="displayName"
+                                value={formData.displayName}
+                                onChange={e => handleInputChange('displayName', e.target.value)}
+                                placeholder="Nguyen Le Tuan Phi"
                             />
-                            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                            {errors.displayName && <p className="text-red-500 text-sm mt-1">{errors.displayName}</p>}
                         </Field>
                     </div>
+
+                    <Field>
+                        <FieldLabel>Email</FieldLabel>
+                        <Input
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={e => handleInputChange('email', e.target.value)}
+                            placeholder="Fizz@example.com"
+                        />
+                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                    </Field>
 
                     <div className="flex columns-2 gap-5">
                         <Field>
@@ -285,7 +302,11 @@ export default function RegisterForm({ countries }: { countries: string[] }) {
             </FieldGroup>
 
             <Toast title={'Register Failed!'} value={error} status={false} onCloseToast={() => setError('')} />
-            <Toast title={'Register success!'} status={success} onCloseToast={() => setSuccess(false)} />
+            <Toast
+                title={'Register success! Check your email to verify account.'}
+                status={success}
+                onCloseToast={() => setSuccess(false)}
+            />
         </div>
     )
 }

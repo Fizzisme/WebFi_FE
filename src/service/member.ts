@@ -22,6 +22,7 @@ interface IWorkHistory {
 export interface IMember {
     id: string
     username: string
+    displayName: string
     email: string
     profile: IProfile
     workHistory: IWorkHistory[]

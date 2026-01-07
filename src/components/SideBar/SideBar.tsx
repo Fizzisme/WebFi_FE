@@ -72,8 +72,10 @@ import { getInitials } from '@/lib/utils'
 
 import { IMember } from '@/service/member'
 import { logoutMember } from '@/app/(main)/(Auth)/action'
+import { IProjectCategory } from '@/app/(main)/projects/layout'
 interface SideBarProps {
     member: IMember | null
+    projectCategories: IProjectCategory[]
 }
 const DATA = {
     user: {
@@ -297,19 +299,31 @@ const DATA = {
     ],
 }
 
-export const SideBar = ({ member }: SideBarProps) => {
+export const SideBar = ({ member, projectCategories }: SideBarProps) => {
     const isMobile = useIsMobile()
     const [activeTeam, setActiveTeam] = React.useState(DATA.teams[0])
 
     if (!activeTeam) return null
     const avatarSrc = member?.profile.avatar ?? ''
-    const username = member?.username ?? 'Guest'
+    const displayName = member?.displayName ?? 'Guest'
     const email = member?.email ?? 'Guest'
 
     const handleClickLogout = async () => {
         return await logoutMember()
     }
-
+    const ICON_MAP: Record<string, React.ElementType> = {
+        ShoppingCart: ShoppingCart,
+        Users: Users,
+        GraduationCap: GraduationCap,
+        HeartPulse: HeartPulse,
+        CreditCard: CreditCard,
+        PlayCircle: PlayCircle,
+        BrainCog: BrainCog,
+        Code: Code,
+        // Thêm các icon khác nếu cần...
+        // Mặc định có thể dùng Folder nếu không tìm thấy
+        Folder: Folder,
+    }
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader>
@@ -410,32 +424,35 @@ export const SideBar = ({ member }: SideBarProps) => {
                 <SidebarGroup>
                     <SidebarGroupLabel>Projects Categories</SidebarGroupLabel>
                     <SidebarMenu>
-                        {DATA.projectCategories.map(item => (
-                            <Collapsible key={item.title} asChild className="group/collapsible">
-                                <SidebarMenuItem>
-                                    <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton tooltip={item.title} className="group">
-                                            {item.icon && <item.icon />}
-                                            <span>{item.title}</span>
-                                            <ChevronRight className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-90" />
-                                        </SidebarMenuButton>
-                                    </CollapsibleTrigger>
-                                    <CollapsibleContent>
-                                        <SidebarMenuSub>
-                                            {item.items?.map(subItem => (
-                                                <SidebarMenuSubItem key={subItem.title}>
-                                                    <SidebarMenuSubButton asChild>
-                                                        <Link href={subItem.url}>
-                                                            <span>{subItem.title}</span>
-                                                        </Link>
-                                                    </SidebarMenuSubButton>
-                                                </SidebarMenuSubItem>
-                                            ))}
-                                        </SidebarMenuSub>
-                                    </CollapsibleContent>
-                                </SidebarMenuItem>
-                            </Collapsible>
-                        ))}
+                        {projectCategories.map(projectCategory => {
+                            const IconComponent = ICON_MAP[projectCategory.icon as string] || Folder
+                            return (
+                                <Collapsible key={projectCategory._id} asChild className="group/collapsible">
+                                    <SidebarMenuItem>
+                                        <CollapsibleTrigger asChild>
+                                            <SidebarMenuButton tooltip={projectCategory.title} className="group">
+                                                {IconComponent && <IconComponent />}
+                                                <span>{projectCategory.title}</span>
+                                                <ChevronRight className="ml-auto transition-transform duration-300 group-data-[state=open]:rotate-90" />
+                                            </SidebarMenuButton>
+                                        </CollapsibleTrigger>
+                                        <CollapsibleContent>
+                                            <SidebarMenuSub>
+                                                {projectCategory?.subCategories?.map(subItem => (
+                                                    <SidebarMenuSubItem key={subItem.title}>
+                                                        <SidebarMenuSubButton asChild>
+                                                            <Link href={`/projects/${subItem.slug}`}>
+                                                                <span>{subItem.title}</span>
+                                                            </Link>
+                                                        </SidebarMenuSubButton>
+                                                    </SidebarMenuSubItem>
+                                                ))}
+                                            </SidebarMenuSub>
+                                        </CollapsibleContent>
+                                    </SidebarMenuItem>
+                                </Collapsible>
+                            )
+                        })}
                     </SidebarMenu>
                 </SidebarGroup>
 
@@ -501,14 +518,14 @@ export const SideBar = ({ member }: SideBarProps) => {
                                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                                 >
                                     <Avatar className="h-8 w-8 rounded-lg">
-                                        <AvatarImage src={avatarSrc} alt={username} />
+                                        <AvatarImage src={avatarSrc} alt={displayName} />
                                         <AvatarFallback className="rounded-lg">
                                             {getInitials(member?.username ?? 'Guest')}
                                         </AvatarFallback>
                                     </Avatar>
 
                                     <div className="grid flex-1 text-left text-sm leading-tight">
-                                        <span className="truncate font-semibold">{username}</span>
+                                        <span className="truncate font-semibold">@{displayName}</span>
                                         <span className="truncate text-xs">{email}</span>
                                     </div>
                                     <ChevronsUpDown className="ml-auto size-4" />
@@ -524,13 +541,13 @@ export const SideBar = ({ member }: SideBarProps) => {
                                 <DropdownMenuLabel className="p-0 font-normal">
                                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                         <Avatar className="h-8 w-8 rounded-lg">
-                                            <AvatarImage src={avatarSrc} alt={username} />
+                                            <AvatarImage src={avatarSrc} alt={displayName} />
                                             <AvatarFallback className="rounded-lg">
                                                 {getInitials(member?.username ?? 'Guest')}
                                             </AvatarFallback>
                                         </Avatar>
                                         <div className="grid flex-1 text-left text-sm leading-tight">
-                                            <span className="truncate font-semibold">{username}</span>
+                                            <span className="truncate font-semibold">@{displayName}</span>
                                             <span className="truncate text-xs">{email}</span>
                                         </div>
                                     </div>

@@ -5,7 +5,8 @@ import { ThemeTogglerButton } from '@/components/animate-ui/components/buttons/t
 import Link from 'next/link'
 import { useAuth } from '@/useHook/useAuth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { IMember } from '@/app/projects/layout'
+import { IMember } from '@/service/member'
+import { getInitials } from '@/lib/utils'
 
 interface HeaderProps {
     member: IMember | null
@@ -22,7 +23,7 @@ export default function Header({ member }: HeaderProps) {
                         <Link href="/member/post">
                             <Avatar className="h-[32px] w-[32px] cursor-pointer border-black border-2 dark:border-white">
                                 <AvatarImage src={member?.profile?.avatar} />
-                                <AvatarFallback>{member?.username ?? 'Guest'}</AvatarFallback>
+                                <AvatarFallback>{getInitials(member?.username ?? 'Guest')}</AvatarFallback>
                             </Avatar>
                         </Link>
                     ) : (

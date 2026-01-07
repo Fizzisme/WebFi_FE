@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { cookies } from 'next/headers'
+import { env } from '@/config/environment'
 
 function extractToken(setCookie: string) {
     return setCookie.split(';')[0].split('=')[1]
@@ -17,8 +18,8 @@ function parseSetCookie(header: string) {
 const handler = NextAuth({
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            clientId: env.GOOGLE_CLIENT_ID!,
+            clientSecret: env.GOOGLE_CLIENT_SECRET!,
         }),
     ],
     callbacks: {

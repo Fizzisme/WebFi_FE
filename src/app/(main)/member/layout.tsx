@@ -2,9 +2,10 @@ import Image from 'next/image'
 import { MapPin, Link as LinkIcon, Calendar, Briefcase } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import * as React from 'react'
-
 import ActionButtons from '@/app/(main)/member/ActionButtons/ActionButtons'
+import { getMember } from '@/service/member'
 export default async function MemberLayout({ children }: { children: React.ReactNode }) {
+    const member = await getMember()
     return (
         <main className="px-5">
             <div className="min-h-screen flex justify-center">
@@ -26,10 +27,7 @@ export default async function MemberLayout({ children }: { children: React.React
                         {/* Avatar Area */}
                         <div className="absolute top-0 left-4 -translate-y-1/2">
                             <Avatar className=" size-20 sm:size-25 md:size-30 lg:size-35 border-4 border-white bg-white shadow-sm">
-                                <AvatarImage
-                                    src="https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/585541175_857469936652436_7584848147068491686_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEY_nzG0t54rpO5mmbjlAZCIRY0qvYfS-chFjSq9h9L53i17sPNo3R-Lhx8fJ8Do1mfA-0TCTrvABjXBE0R4tO2&_nc_ohc=e52vJSbuFVgQ7kNvwGm-ebl&_nc_oc=Adlo_flPGm3gVZYbskcWKItZJUH6_CqLEbHA0YTZYZuVdLgyENUCs5Cwa1eK8B6FKewUM3EtgzLJaYGF9joA9Nyr&_nc_zt=23&_nc_ht=scontent.fsgn5-9.fna&_nc_gid=w54fqWaPfFWoDALcdA0kSQ&oh=00_AfkQlD8oEZHqWGlVftUrMKVeQMiV3fZbqxLeSRagM35EmA&oe=69567AC9"
-                                    className="object-cover"
-                                />
+                                <AvatarImage src={member?.profile?.avatar} className="object-cover" />
                                 <AvatarFallback>Fizz</AvatarFallback>
                             </Avatar>
                         </div>
@@ -41,7 +39,9 @@ export default async function MemberLayout({ children }: { children: React.React
                         <div className="mt-2">
                             {/* Name & Verify */}
                             <div className="flex items-center gap-1">
-                                <h1 className="text-xl font-extrabold text-gray-900 leading-tight">Tuan Phi</h1>
+                                <h1 className="text-xl font-extrabold text-gray-900 leading-tight">
+                                    {member?.displayName}
+                                </h1>
                                 {/*<BadgeCheck*/}
                                 {/*    className="w-5 h-5 text-blue-500 fill-blue-500 text-white"*/}
                                 {/*    fill="currentColor"*/}
@@ -49,41 +49,50 @@ export default async function MemberLayout({ children }: { children: React.React
                                 {/*/>*/}
                                 {/* Note: Icon BadgeCheck của Lucide rỗng, để giống hệt cần style fill/stroke hoặc dùng SVG custom */}
                             </div>
-                            <p className="text-[15px] text-gray-500">@fizz_isme</p>
+                            <p className="text-[15px] text-gray-500">@{member?.username}</p>
 
                             {/* Bio */}
-                            <p className="mt-3 text-[15px] text-gray-900 leading-normal">
-                                This product was built by me
-                            </p>
+                            <p className="mt-3 text-[15px] text-gray-900 leading-normal">{member?.profile?.bio}</p>
 
                             {/* Meta Data */}
                             <div className="flex flex-wrap items-center gap-y-1 gap-x-3 mt-3 text-[15px] text-gray-500">
-                                <div className="flex items-center gap-1">
-                                    <Briefcase size={18} />
-                                    <span>ĐH CNTT</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <MapPin size={18} />
-                                    <span>Viet Nam</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <LinkIcon size={18} />
-                                    <a
-                                        href="https://www.facebook.com/Fi.is.me.hello?locale=vi_VN"
-                                        className="text-blue-500 hover:underline"
-                                    >
-                                        fb.com
-                                    </a>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    {/* Icon Balloon sinh nhật thay bằng map pin tạm hoặc icon cake */}
-                                    <span className="text-lg leading-none">🎈</span>
-                                    <span>Born September 9, 2005</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <Calendar size={18} />
-                                    <span>Joined December 2025</span>
-                                </div>
+                                {member?.workHistory &&
+                                    member?.workHistory.map(w => (
+                                        <div className="flex items-center gap-1">
+                                            <Briefcase size={18} />
+                                            <span>{w.company}</span>
+                                        </div>
+                                    ))}
+
+                                {member?.profile?.location && (
+                                    <div className="flex items-center gap-1">
+                                        <MapPin size={18} />
+                                        <span>{member?.profile?.location}</span>
+                                    </div>
+                                )}
+
+                                {member?.profile?.website && (
+                                    <div className="flex items-center gap-1">
+                                        <LinkIcon size={18} />
+                                        <a href={member?.profile?.website} className="text-blue-500 hover:underline">
+                                            fb.com
+                                        </a>
+                                    </div>
+                                )}
+
+                                {member?.profile?.birthday && (
+                                    <div className="flex items-center gap-1">
+                                        <span className="text-lg leading-none">🎈</span>
+                                        <span>{member?.profile?.birthday}</span>
+                                    </div>
+                                )}
+
+                                {member?.dateJoined && (
+                                    <div className="flex items-center gap-1">
+                                        <Calendar size={18} />
+                                        <span>{member?.dateJoined}</span>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Follow Stats */}
