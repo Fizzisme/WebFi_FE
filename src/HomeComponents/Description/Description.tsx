@@ -71,7 +71,7 @@ export default function Description() {
             >
                 <Button className="cursor-pointer">Get started</Button>
 
-                <Link href="/projects/online-store">
+                <Link href="/projects/e-commerce/online-store">
                     <Button
                         variant="ghost"
                         className="group w-[150px] flex items-center justify-between cursor-pointer"

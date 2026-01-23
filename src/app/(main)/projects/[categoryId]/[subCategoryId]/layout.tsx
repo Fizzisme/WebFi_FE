@@ -18,15 +18,17 @@ export default async function CategoriesLayout({
 }: {
     children: React.ReactNode
     params: Promise<{
-        categoriesId?: string
+        categoryId?: string
+        subCategoryId?: string
     }>
 }) {
-    const { categoriesId } = await params
-    if (!categoriesId) {
+    const { categoryId, subCategoryId } = await params
+    if (!subCategoryId || !categoryId) {
         notFound()
     }
 
-    const breadCrumbPage: string = formatSlugToTitle(categoriesId)
+    const subBreadCrumb: string = formatSlugToTitle(subCategoryId)
+    const categoryBreadCrumb: string = formatSlugToTitle(categoryId)
 
     return (
         <main className="mt-[82px]">
@@ -41,13 +43,16 @@ export default async function CategoriesLayout({
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>{breadCrumbPage}</BreadcrumbPage>
+                                <BreadcrumbPage>{categoryBreadCrumb}</BreadcrumbPage>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="hidden md:block" />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage>{subBreadCrumb}</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
             </header>
-
             {children}
         </main>
     )

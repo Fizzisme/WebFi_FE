@@ -1,7 +1,7 @@
 import { SidebarInset, SidebarProvider } from '@/components/animate-ui/components/radix/sidebar'
 import { SideBar } from '@/components/SideBar/SideBar'
 import { getMember } from '@/service/member'
-import { env } from '@/config/environment'
+import { fetchGraphQL } from '@/lib/graphql'
 
 export interface subCategory {
     _id?: string
@@ -18,15 +18,15 @@ export interface IProjectCategory {
     icon?: string
     subCategories?: subCategory[]
 }
-async function fetchCategories() {
-    const res = await fetch(env.GRAPHQL_ENDPOINT!, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            query: `
-        query {
+
+interface IProjectCategoriesResponse {
+    projectCategories: IProjectCategory[]
+}
+
+export default async function ProjectsLayout({ children }: { children: React.ReactNode }) {
+    const member = await getMember()
+    const res = await fetchGraphQL<IProjectCategoriesResponse>(`
+     query {
           projectCategories {
           _id
             key
@@ -38,20 +38,9 @@ async function fetchCategories() {
                 slug
             }
           }
-        }
-      `,
-        }),
-        cache: 'no-store',
-    })
+        }`)
 
-    const json = await res.json()
-    return json.data.projectCategories
-}
-
-export default async function ProjectsLayout({ children }: { children: React.ReactNode }) {
-    const member = await getMember()
-    const projectCategories = await fetchCategories()
-    console.log(projectCategories)
+    const projectCategories = res.projectCategories
 
     return (
         <>

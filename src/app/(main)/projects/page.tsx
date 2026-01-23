@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function ProjectsPage() {
-    redirect('/projects/online-store')
+    redirect('/projects/e-commerce/online-store')
 }

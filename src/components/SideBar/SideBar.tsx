@@ -68,6 +68,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useIsMobile } from '@/hooks/use-mobile'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { getInitials } from '@/lib/utils'
 
 import { IMember } from '@/service/member'
@@ -303,6 +304,8 @@ export const SideBar = ({ member, projectCategories }: SideBarProps) => {
     const isMobile = useIsMobile()
     const [activeTeam, setActiveTeam] = React.useState(DATA.teams[0])
 
+    const pathname = usePathname()
+
     if (!activeTeam) return null
     const avatarSrc = member?.profile.avatar ?? ''
     const displayName = member?.displayName ?? 'Guest'
@@ -426,8 +429,14 @@ export const SideBar = ({ member, projectCategories }: SideBarProps) => {
                     <SidebarMenu>
                         {projectCategories.map(projectCategory => {
                             const IconComponent = ICON_MAP[projectCategory.icon as string] || Folder
+                            const isOpen = pathname.includes(projectCategory.slug!)
                             return (
-                                <Collapsible key={projectCategory._id} asChild className="group/collapsible">
+                                <Collapsible
+                                    key={projectCategory._id}
+                                    defaultOpen={isOpen}
+                                    asChild
+                                    className="group/collapsible"
+                                >
                                     <SidebarMenuItem>
                                         <CollapsibleTrigger asChild>
                                             <SidebarMenuButton tooltip={projectCategory.title} className="group">
@@ -438,15 +447,20 @@ export const SideBar = ({ member, projectCategories }: SideBarProps) => {
                                         </CollapsibleTrigger>
                                         <CollapsibleContent>
                                             <SidebarMenuSub>
-                                                {projectCategory?.subCategories?.map(subItem => (
-                                                    <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild>
-                                                            <Link href={`/projects/${subItem.slug}`}>
-                                                                <span>{subItem.title}</span>
-                                                            </Link>
-                                                        </SidebarMenuSubButton>
-                                                    </SidebarMenuSubItem>
-                                                ))}
+                                                {projectCategory?.subCategories?.map(subItem => {
+                                                    const isActive = pathname.includes(subItem.slug!)
+                                                    return (
+                                                        <SidebarMenuSubItem key={subItem.title}>
+                                                            <SidebarMenuSubButton asChild isActive={isActive}>
+                                                                <Link
+                                                                    href={`/projects/${projectCategory.slug}/${subItem.slug}`}
+                                                                >
+                                                                    <span>{subItem.title}</span>
+                                                                </Link>
+                                                            </SidebarMenuSubButton>
+                                                        </SidebarMenuSubItem>
+                                                    )
+                                                })}
                                             </SidebarMenuSub>
                                         </CollapsibleContent>
                                     </SidebarMenuItem>

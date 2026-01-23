@@ -25,3 +25,13 @@ export function getInitials(name: string, length = 2): string {
         .join('')
         .toUpperCase()
 }
+
+export function parseGithubUrl(url: string)  : {owner: string, repo: string} {
+    const cleaned = url
+        .replace(/^https?:\/\/github\.com\//, '')
+        .replace(/\/$/, '');
+
+    const [owner, repo] = cleaned.split('/');
+
+    return { owner, repo };
+}

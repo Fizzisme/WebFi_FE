@@ -43,13 +43,13 @@ export default function Header({ member }: HeaderProps) {
                     ) : (
                         <Link
                             href="/login"
-                            className="border-[2px] h-[25px] w-[25px] border-[#000] rounded-full flex items-center justify-center"
+                            className="border-[2px] h-[25px] w-[25px] border-black dark:border-white rounded-full flex items-center justify-center"
                         >
                             <User className="size-5" strokeWidth={1.5} />
                         </Link>
                     ))}
 
-                <div className="border-[2px] border-[#000] dark:border-white rounded h-[25px] w-[25px] flex items-center justify-center">
+                <div className="border-[2px] border-[#000] dark:border-white rounded h-[25px] w-[25px] flex items-center justify-center cursor-pointer">
                     <ThemeTogglerButton />
                 </div>
             </div>

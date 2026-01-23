@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'scontent.fsgn5-14.fna.fbcdn.net',
+                hostname: '**',
             },
         ],
     },
